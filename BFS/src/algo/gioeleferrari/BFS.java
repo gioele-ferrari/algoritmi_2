@@ -149,12 +149,34 @@ public class BFS {
      * @return se il grafo orientato ha un ciclo
      */
     public boolean hasDirCycle() {
+        boolean[] stack = new boolean[this.grafo.getOrder()]; // Per tracciare i nodi nello stack della DFS
+
         for (int nodo = 0; nodo < this.grafo.getOrder(); nodo++) {
             if (!this.nodiScoperti[nodo]) {
-                this.visitaGrafo(nodo);
+                if (hasDirCycleImpl(nodo, stack)) {
+                    return true;
+                }
             }
         }
-        return this.hasCycle;
+        return false;
+    }
+
+    private boolean hasDirCycleImpl(int nodoSorgente, boolean[] stack) {
+        this.nodiScoperti[nodoSorgente] = true;
+        stack[nodoSorgente] = true;
+
+        for (int nodo : this.grafo.getNeighbors(nodoSorgente)) {
+            if (!this.nodiScoperti[nodo]) {
+                if (hasDirCycleImpl(nodo, stack)) {
+                    return true;
+                }
+            } else if (stack[nodo]) {
+                return true;
+            }
+        }
+
+        stack[nodoSorgente] = false;
+        return false;
     }
 
     /**
