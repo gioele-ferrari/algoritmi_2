@@ -94,7 +94,7 @@ class BFSTest {
         BFS bfsTest_1 = new BFS(grafoTest_1);
         BFS bfsTest_2 = new BFS(grafoTest_2);
 
-        assertEquals(3, bfsTest_1.getNodesInOrderPostVisit(3).getFirst());
-        assertEquals(3, bfsTest_2.getNodesInOrderPostVisit(3).getFirst());
+        assertEquals(3, bfsTest_1.getNodesInOrderPostVisit(3).get(0));
+        assertEquals(3, bfsTest_2.getNodesInOrderPostVisit(3).get(0));
     }
 }

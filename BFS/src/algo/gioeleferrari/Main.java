@@ -11,6 +11,5 @@ public class Main {
     public static void main(String[] args) {
         GraphInterface grafo = new DirectedGraph("3; 0 2; 2 1; 1 2");
         BFS bfs = new BFS(grafo);
-        System.out.println(bfs.hasDirCycle());
     }
 }

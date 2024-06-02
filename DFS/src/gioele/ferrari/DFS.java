@@ -11,6 +11,8 @@ public class DFS {
     private GraphInterface albero;
     private ArrayList<Integer> nodiScopertiOrdine;
     private boolean[] nodiScoperti;
+    private boolean hasDirectedCycle;
+    private ArrayList<Integer> nodiScopertiOrdineFineVisita;
 
     public DFS(GraphInterface grafo) {
         this.grafo = grafo;
@@ -25,8 +27,12 @@ public class DFS {
             if (!this.nodiScoperti[vicino]) {
                 this.albero.addEdge(nodoSorgente, vicino);
                 visitaGrafo(vicino);
+            } else if (!this.nodiScopertiOrdineFineVisita.contains(vicino)) {
+                this.hasDirectedCycle = true;
             }
         }
+
+        this.nodiScopertiOrdineFineVisita.add(nodoSorgente);
     }
 
     private void visitaGrafoCompleto(int nodoSorgente) {
@@ -55,10 +61,23 @@ public class DFS {
         return this.albero;
     }
 
+    public boolean hasDirectedCycle() {
+        for (int nodo = 0; nodo < this.grafo.getOrder(); nodo++) {
+            if (!this.nodiScoperti[nodo]) {
+                this.visitaGrafo(nodo);
+            }
+        }
+
+        return this.hasDirectedCycle;
+    }
+
     private void init() {
         this.albero = this.grafo.create();
         this.nodiScopertiOrdine = new ArrayList<>();
         this.nodiScoperti = new boolean[grafo.getOrder()];
+        this.hasDirectedCycle = false;
+        this.nodiScopertiOrdineFineVisita = new ArrayList<>();
+
         Arrays.fill(this.nodiScoperti, false);
     }
 }

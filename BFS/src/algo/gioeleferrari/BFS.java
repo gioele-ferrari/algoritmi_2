@@ -67,7 +67,7 @@ public class BFS {
         coda.add(nodoSorgente);
 
         while (!coda.isEmpty()) {
-            Integer nodo = coda.removeFirst();
+            Integer nodo = coda.remove(0);
             for (int vicino : this.grafo.getNeighbors(nodo)) {
                 if (!this.nodiScoperti[vicino]) {
                     this.albero.addEdge(nodoSorgente, vicino);
@@ -144,40 +144,6 @@ public class BFS {
         return this.hasCycle;
     }
 
-    /**
-     * Metodo per controllare in un grafo orientato c'è un ciclo
-     * @return se il grafo orientato ha un ciclo
-     */
-    public boolean hasDirCycle() {
-        boolean[] stack = new boolean[this.grafo.getOrder()]; // Per tracciare i nodi nello stack della DFS
-
-        for (int nodo = 0; nodo < this.grafo.getOrder(); nodo++) {
-            if (!this.nodiScoperti[nodo]) {
-                if (hasDirCycleImpl(nodo, stack)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean hasDirCycleImpl(int nodoSorgente, boolean[] stack) {
-        this.nodiScoperti[nodoSorgente] = true;
-        stack[nodoSorgente] = true;
-
-        for (int nodo : this.grafo.getNeighbors(nodoSorgente)) {
-            if (!this.nodiScoperti[nodo]) {
-                if (hasDirCycleImpl(nodo, stack)) {
-                    return true;
-                }
-            } else if (stack[nodo]) {
-                return true;
-            }
-        }
-
-        stack[nodoSorgente] = false;
-        return false;
-    }
 
     /**
      * Restituisce la lista dei nodi che terminano in ordine nell'algoritmo
